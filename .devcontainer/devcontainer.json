@@ -1,8 +1,8 @@
-// See https://containers.dev/implementors/json_reference/ for configuration reference
 {
-	"name": "Noctis-Api",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-  "remoteUser": "node"
+  "name": "Noctis-Api",
+  "dockerComposeFile": "compose.yml",
+  "service": "noctis-api",
+  "remoteUser": "node",
+  "workspaceFolder": "/workspace",
+  "updateRemoteUserUID": true
 }

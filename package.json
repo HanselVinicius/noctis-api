@@ -29,6 +29,7 @@
     "@opentelemetry/sdk-node": "^0.211.0",
     "@opentelemetry/sdk-trace-base": "^2.5.0",
     "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "baileysauth": "^1.2.0",
     "dotenv": "^17.2.4",
     "pino": "^10.3.0",
     "qrcode-terminal": "^0.12.0",
