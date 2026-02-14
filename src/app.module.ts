@@ -4,7 +4,7 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
 
 @Module({
   imports: [
-    WhatsappModule
+    WhatsappModule,
   ],
   controllers: [AppController],
   providers: [],

@@ -21,7 +21,7 @@ export class GroupInvokeObserver implements MessageObserver {
       '';
 
     if (!text) return;
-    if (text.trim().toLowerCase() !== 'invoke') return;
+    if (text.trim().toLowerCase() !== '!invoke') return;
 
     const metadata = await sock.groupMetadata(from);
 

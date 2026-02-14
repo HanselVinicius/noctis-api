@@ -1,4 +1,4 @@
-import { WAMessage, WASocket, proto } from '@whiskeysockets/baileys';
+import { WAMessage, WASocket } from '@whiskeysockets/baileys';
 
 export interface MessageObserver {
   name: string;

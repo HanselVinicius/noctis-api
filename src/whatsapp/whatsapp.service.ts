@@ -1,7 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import makeWASocket, {
     DisconnectReason,
-    useMultiFileAuthState,
     fetchLatestBaileysVersion,
     WASocket
 } from '@whiskeysockets/baileys';
@@ -11,6 +10,7 @@ import { Boom } from '@hapi/boom';
 import { MessageDispatcher } from './message/message.dispatcher';
 import { AudioBlockObserver } from './message/observers/audio-block.observer';
 import { GroupInvokeObserver } from './message/observers/group-invoke.observer';
+import { usePostgreSQLAuthState } from 'postgres-baileys';
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
@@ -20,7 +20,7 @@ export class WhatsappService implements OnModuleInit {
     constructor(
         private readonly audioBlockObserver: AudioBlockObserver,
         private readonly messageDispatcher: MessageDispatcher,
-        private readonly groupInvokeObserver: GroupInvokeObserver
+        private readonly groupInvokeObserver: GroupInvokeObserver,
     ) { }
 
     async onModuleInit() {
@@ -37,7 +37,15 @@ export class WhatsappService implements OnModuleInit {
     }
 
     private async connect() {
-        const { state, saveCreds } = await useMultiFileAuthState('./baileys_auth');
+
+        const { state, saveCreds } = await usePostgreSQLAuthState({
+            host: String(process.env.POSTGRES_HOST),
+            port: Number(process.env.POSTGRES_PORT),
+            user: String(process.env.POSTGRES_USER),
+            password: String(process.env.POSTGRES_PASSWORD),
+            database: String(process.env.POSTGRES_DB),
+
+        }, 'session_id_1');
         const { version } = await fetchLatestBaileysVersion();
 
         this.logger.log(`Iniciando conexão WhatsApp...`);

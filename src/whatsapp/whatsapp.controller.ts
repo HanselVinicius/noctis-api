@@ -1,8 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { WhatsappService } from './whatsapp.service';
 import { Traced } from 'src/config/Traced';
+import { ApiSecurityGuard } from 'src/middleware/security.middleware';
 
 @Controller('whatsapp')
+@UseGuards(ApiSecurityGuard)
 export class WhatsappController {
   constructor(private readonly whatsapp: WhatsappService) {}
 

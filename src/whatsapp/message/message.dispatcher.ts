@@ -1,4 +1,4 @@
-import { WAMessage, WASocket, proto } from '@whiskeysockets/baileys';
+import { WAMessage, WASocket } from '@whiskeysockets/baileys';
 import { Injectable, Logger } from '@nestjs/common';
 import { MessageObserver } from './message.observer';
 
