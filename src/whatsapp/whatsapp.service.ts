@@ -37,7 +37,7 @@ export class WhatsappService implements OnModuleInit {
     }
 
     private async connect() {
-
+        const sessionName = String(process.env.SESSION_NAME);
         const { state, saveCreds } = await usePostgreSQLAuthState({
             host: String(process.env.POSTGRES_HOST),
             port: Number(process.env.POSTGRES_PORT),
@@ -45,7 +45,7 @@ export class WhatsappService implements OnModuleInit {
             password: String(process.env.POSTGRES_PASSWORD),
             database: String(process.env.POSTGRES_DB),
 
-        }, 'session_id_1');
+        }, sessionName);
         const { version } = await fetchLatestBaileysVersion();
 
         this.logger.log(`Iniciando conexão WhatsApp...`);

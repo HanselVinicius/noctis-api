@@ -9,7 +9,12 @@ import { GroupInvokeObserver } from './message/observers/group-invoke.observer';
 @Module({
   imports: [],
   controllers: [WhatsappController],
-  providers: [WhatsappService,AudioBlockObserver,MessageDispatcher,GroupInvokeObserver],
+  providers: [
+    WhatsappService,
+    AudioBlockObserver,
+    MessageDispatcher,
+    GroupInvokeObserver,
+  ],
   exports: [WhatsappService]
 })
 export class WhatsappModule {}
