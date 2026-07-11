@@ -2,6 +2,7 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import makeWASocket, {
     DisconnectReason,
     fetchLatestBaileysVersion,
+    useMultiFileAuthState,
     WASocket
 } from '@whiskeysockets/baileys';
 import * as qrcode from 'qrcode-terminal';
@@ -10,7 +11,7 @@ import { Boom } from '@hapi/boom';
 import { MessageDispatcher } from './message/message.dispatcher';
 import { AudioBlockObserver } from './message/observers/audio-block.observer';
 import { GroupInvokeObserver } from './message/observers/group-invoke.observer';
-import { usePostgreSQLAuthState } from 'postgres-baileys';
+import { SendToMessageBrokerObserver } from './message/observers/send-to-message-broker.observer';
 
 @Injectable()
 export class WhatsappService implements OnModuleInit {
@@ -21,12 +22,14 @@ export class WhatsappService implements OnModuleInit {
         private readonly audioBlockObserver: AudioBlockObserver,
         private readonly messageDispatcher: MessageDispatcher,
         private readonly groupInvokeObserver: GroupInvokeObserver,
+        private readonly sendToMessageBrokerObserver: SendToMessageBrokerObserver
     ) { }
 
     async onModuleInit() {
         await this.connect();
         this.messageDispatcher.register(this.audioBlockObserver);
         this.messageDispatcher.register(this.groupInvokeObserver);
+        this.messageDispatcher.register(this.sendToMessageBrokerObserver);
     }
 
     getSocket(): WASocket {
@@ -37,15 +40,7 @@ export class WhatsappService implements OnModuleInit {
     }
 
     private async connect() {
-        const sessionName = String(process.env.SESSION_NAME);
-        const { state, saveCreds } = await usePostgreSQLAuthState({
-            host: String(process.env.POSTGRES_HOST),
-            port: Number(process.env.POSTGRES_PORT),
-            user: String(process.env.POSTGRES_USER),
-            password: String(process.env.POSTGRES_PASSWORD),
-            database: String(process.env.POSTGRES_DB),
-
-        }, sessionName);
+        const { state, saveCreds } = await useMultiFileAuthState('./baileys_auth');
         const { version } = await fetchLatestBaileysVersion();
 
         this.logger.log(`Iniciando conexão WhatsApp...`);
