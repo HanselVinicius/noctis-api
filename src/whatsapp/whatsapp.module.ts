@@ -9,17 +9,15 @@ import { SendToMessageBrokerObserver } from './message/observers/send-to-message
 
 @Global()
 @Module({
-  imports: [
-    BrokerModule
-  ],
+  imports: [BrokerModule],
   controllers: [WhatsappController],
   providers: [
     WhatsappService,
     AudioBlockObserver,
     MessageDispatcher,
     GroupInvokeObserver,
-    SendToMessageBrokerObserver
+    SendToMessageBrokerObserver,
   ],
-  exports: [WhatsappService]
+  exports: [WhatsappService],
 })
 export class WhatsappModule {}

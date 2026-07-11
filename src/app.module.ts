@@ -3,10 +3,8 @@ import { AppController } from './app.controller';
 import { WhatsappModule } from './whatsapp/whatsapp.module';
 
 @Module({
-  imports: [
-    WhatsappModule,
-  ],
+  imports: [WhatsappModule],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

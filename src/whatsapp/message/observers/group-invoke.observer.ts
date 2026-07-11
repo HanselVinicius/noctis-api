@@ -1,4 +1,4 @@
-import { WAMessage, WASocket, proto } from '@whiskeysockets/baileys';
+import { WAMessage, WASocket } from '@whiskeysockets/baileys';
 import { MessageObserver } from '../message.observer';
 import { Injectable } from '@nestjs/common';
 
@@ -26,16 +26,18 @@ export class GroupInvokeObserver implements MessageObserver {
     const metadata = await sock.groupMetadata(from);
 
     const participants = metadata.participants
-      .map(p => p.id)
-      .filter(id => !id.includes('status'));
+      .map((p) => p.id)
+      .filter((id) => !id.includes('status'));
 
     if (!participants.length) return;
 
-    const mentionText = participants.map(id => `@${id.split('@')[0]}`).join(' ');
+    const mentionText = participants
+      .map((id) => `@${id.split('@')[0]}`)
+      .join(' ');
 
     await sock.sendMessage(from, {
       text: `📢 summon geral:\n\n${mentionText}`,
-      mentions: participants
+      mentions: participants,
     });
   }
 }

@@ -1,0 +1,39 @@
+{
+  "rabbit_version": "4.0",
+  "users": [],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [],
+  "queues": [
+    {
+      "name": "direct.messages.incoming.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "direct.messages.incoming.exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "direct.messages.incoming.exchange",
+      "vhost": "/",
+      "destination": "direct.messages.incoming.queue",
+      "destination_type": "queue",
+      "routing_key": "direct.messages.incoming",
+      "arguments": {}
+    }
+  ]
+}

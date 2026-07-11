@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config({
-  path: '.env'
+  path: '.env',
 });
 
 import tracer from './tracer';
@@ -12,7 +12,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   try {
-    await tracer.start();
+    tracer.start();
 
     const app = await NestFactory.create(AppModule);
 

@@ -4,14 +4,15 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 
 const debugExporter = new ConsoleSpanExporter();
-const traceExporter = process.env.NODE_ENV === 'development' 
-  ? debugExporter 
-  : new OTLPTraceExporter({
-      url: process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT || '',
-      headers: {
-        'signoz-ingestion-key': process.env.SIGNOZ_INGESTION_KEY || '',
-      },
-    });
+const traceExporter =
+  process.env.NODE_ENV === 'development'
+    ? debugExporter
+    : new OTLPTraceExporter({
+        url: process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT || '',
+        headers: {
+          'signoz-ingestion-key': process.env.SIGNOZ_INGESTION_KEY || '',
+        },
+      });
 
 const sdk = new NodeSDK({
   traceExporter,
@@ -21,7 +22,11 @@ const sdk = new NodeSDK({
       '@opentelemetry/instrumentation-http': {
         enabled: true,
         ignoreIncomingRequestHook: (req) => {
-          return req.url?.includes('/health') || req.url?.includes('/metrics') || false;
+          return (
+            req.url?.includes('/health') ||
+            req.url?.includes('/metrics') ||
+            false
+          );
         },
       },
     }),

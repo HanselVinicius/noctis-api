@@ -5,9 +5,9 @@ export class AppController {
   constructor() {}
 
   @Get()
-  healthCheck(){
+  healthCheck() {
     return {
-      status:'Kings of Lucis! Come to me!'
-    }
+      status: 'Kings of Lucis! Come to me!',
+    };
   }
 }

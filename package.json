@@ -29,10 +29,9 @@
     "@opentelemetry/sdk-node": "^0.211.0",
     "@opentelemetry/sdk-trace-base": "^2.5.0",
     "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "amqplib": "^2.0.1",
     "dotenv": "^17.2.4",
-    "pg": "^8.18.0",
     "pino": "^10.3.0",
-    "postgres-baileys": "^1.5.0",
     "qrcode-terminal": "^0.12.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

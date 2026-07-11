@@ -18,7 +18,7 @@ export class MessageDispatcher {
         await obs.onMessage(sock, message);
       } catch (err) {
         this.logger.error(
-          `Erro no observer ${obs.name}: ${err?.message || err}`
+          `Erro no observer ${obs.name}: ${(err as Error)?.message || err}`,
         );
       }
     }

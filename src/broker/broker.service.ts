@@ -1,5 +1,7 @@
-import { BrokerMessage } from "./BrokerMessage";
+import { BrokerMessage } from './BrokerMessage';
 
-export interface BrokerService{
-    send(message:BrokerMessage):Promise<void>;
+export const BrokerServiceToken = 'BrokerService';
+
+export interface BrokerService {
+  send(message: BrokerMessage): Promise<void>;
 }

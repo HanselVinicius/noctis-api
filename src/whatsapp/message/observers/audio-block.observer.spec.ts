@@ -9,7 +9,7 @@ describe('AudioBlockObserver', () => {
     observer = new AudioBlockObserver();
 
     sock = {
-      sendMessage: jest.fn().mockResolvedValue(undefined)
+      sendMessage: jest.fn().mockResolvedValue(undefined),
     };
   });
 
@@ -19,10 +19,10 @@ describe('AudioBlockObserver', () => {
         remoteJid: '5511999999999@s.whatsapp.net',
         fromMe: false,
         id: 'msg1',
-        ...overrides.key
+        ...overrides.key,
       },
       message: {},
-      ...overrides
+      ...overrides,
     } as WAMessage;
   }
 
@@ -30,9 +30,9 @@ describe('AudioBlockObserver', () => {
     const message = createMessage({
       message: {
         audioMessage: {
-          mimetype: 'audio/ogg'
-        }
-      } as any
+          mimetype: 'audio/ogg',
+        },
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -41,19 +41,19 @@ describe('AudioBlockObserver', () => {
     expect(sock.sendMessage).toHaveBeenCalledWith(
       '5511999999999@s.whatsapp.net',
       expect.objectContaining({
-        text: expect.stringContaining('não recebe áudios')
+        text: expect.stringContaining('não recebe áudios'),
       }),
       expect.objectContaining({
-        quoted: message
-      })
+        quoted: message,
+      }),
     );
   });
 
   it('should not send a message when the incoming message is not audio', async () => {
     const message = createMessage({
       message: {
-        conversation: 'regular text'
-      } as any
+        conversation: 'regular text',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -64,11 +64,11 @@ describe('AudioBlockObserver', () => {
   it('should not send a message if the message was sent by the bot itself', async () => {
     const message = createMessage({
       key: {
-        fromMe: true
+        fromMe: true,
       },
       message: {
-        audioMessage: {}
-      } as any
+        audioMessage: {},
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -78,7 +78,7 @@ describe('AudioBlockObserver', () => {
 
   it('should safely ignore messages without message content', async () => {
     const message = createMessage({
-      message: undefined as any
+      message: undefined as any,
     });
 
     await observer.onMessage(sock as WASocket, message);

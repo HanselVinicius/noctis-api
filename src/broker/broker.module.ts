@@ -1,12 +1,15 @@
-import { Module } from "@nestjs/common";
-import { RabbitMQBrokerService } from "./rabbitmq.broker.service";
+import { Module } from '@nestjs/common';
+import { RabbitMQBrokerService } from './rabbitmq.broker.service';
+import { BrokerServiceToken } from './broker.service';
 
 @Module({
+  imports: [],
   providers: [
-    RabbitMQBrokerService
+    {
+      provide: BrokerServiceToken,
+      useClass: RabbitMQBrokerService,
+    },
   ],
-  exports: [
-    RabbitMQBrokerService
-  ],
+  exports: [BrokerServiceToken],
 })
 export class BrokerModule {}

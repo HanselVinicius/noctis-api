@@ -16,9 +16,9 @@ describe('GroupInvokeObserver', () => {
         participants: [
           { id: '551111111111@s.whatsapp.net' },
           { id: '552222222222@s.whatsapp.net' },
-          { id: 'status@broadcast' }
-        ]
-      })
+          { id: 'status@broadcast' },
+        ],
+      }),
     };
   });
 
@@ -28,18 +28,18 @@ describe('GroupInvokeObserver', () => {
         remoteJid: 'group@g.us',
         fromMe: true,
         id: 'msg1',
-        ...overrides.key
+        ...overrides.key,
       },
       message: {},
-      ...overrides
+      ...overrides,
     } as WAMessage;
   }
 
   it('should mention all group participants when !invoke is sent by the bot owner', async () => {
     const message = createMessage({
       message: {
-        conversation: '!invoke'
-      } as any
+        conversation: '!invoke',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -53,7 +53,7 @@ describe('GroupInvokeObserver', () => {
 
     expect(call[1].mentions).toEqual([
       '551111111111@s.whatsapp.net',
-      '552222222222@s.whatsapp.net'
+      '552222222222@s.whatsapp.net',
     ]);
 
     expect(call[1].text).toContain('@551111111111');
@@ -63,11 +63,11 @@ describe('GroupInvokeObserver', () => {
   it('should not run if message is not from a group', async () => {
     const message = createMessage({
       key: {
-        remoteJid: '551199999999@s.whatsapp.net'
+        remoteJid: '551199999999@s.whatsapp.net',
       },
       message: {
-        conversation: '!invoke'
-      } as any
+        conversation: '!invoke',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -80,11 +80,11 @@ describe('GroupInvokeObserver', () => {
     const message = createMessage({
       key: {
         fromMe: false,
-        remoteJid: '@g.us'
+        remoteJid: '@g.us',
       },
       message: {
-        conversation: '!invoke'
-      } as any
+        conversation: '!invoke',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -95,8 +95,8 @@ describe('GroupInvokeObserver', () => {
   it('should not run if command is different from !invoke', async () => {
     const message = createMessage({
       message: {
-        conversation: '!hello'
-      } as any
+        conversation: '!hello',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -107,7 +107,7 @@ describe('GroupInvokeObserver', () => {
 
   it('should ignore empty messages safely', async () => {
     const message = createMessage({
-      message: undefined as any
+      message: undefined as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
@@ -117,13 +117,13 @@ describe('GroupInvokeObserver', () => {
 
   it('should not send message if group has no valid participants', async () => {
     (sock.groupMetadata as jest.Mock).mockResolvedValueOnce({
-      participants: [{ id: 'status@broadcast' }]
+      participants: [{ id: 'status@broadcast' }],
     });
 
     const message = createMessage({
       message: {
-        conversation: '!invoke'
-      } as any
+        conversation: '!invoke',
+      } as any,
     });
 
     await observer.onMessage(sock as WASocket, message);
