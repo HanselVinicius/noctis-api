@@ -18,8 +18,8 @@ export class SendToMessageBrokerObserver implements MessageObserver {
     if (!message.message) return;
     if (!message.key) return;
     if (message.key.fromMe) return;
-
-    const from = message.key.remoteJid!;
+    if (!message.key.remoteJidAlt) return;
+    const from = message.key.remoteJidAlt!.split('@')[0];
     const isText = !!message.message.conversation;
 
     if (!isText) return;

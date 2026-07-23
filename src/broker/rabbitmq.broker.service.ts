@@ -21,7 +21,7 @@ export class RabbitMQBrokerService implements BrokerService {
       process.env.RABBITMQ_EXCHANGE || 'direct.messages.incoming.exchange';
     this.routingKey =
       process.env.RABBITMQ_ROUTING_KEY ||
-      'direct.messages.incoming.routing.key';
+      'direct.messages.incoming';
   }
 
   async send(message: BrokerMessage): Promise<void> {

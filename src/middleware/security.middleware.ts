@@ -10,7 +10,7 @@ import { Request } from 'express';
 @Injectable()
 export class ApiSecurityGuard implements CanActivate {
   private readonly allowedIp = process.env.ALLOWED_IP;
-  private readonly allowedIps = ['127.0.0.1', '::1', this.allowedIp];
+  private readonly allowedIps = ['127.0.0.1', '::1', this.allowedIp,'::ffff:127.0.0.1'];
 
   private readonly apiKey = process.env.API_KEY;
 
