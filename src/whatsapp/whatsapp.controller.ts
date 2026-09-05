@@ -16,4 +16,12 @@ export class WhatsappController {
 
     return { success: true };
   }
+
+  @Post('call')
+  @Traced('call')
+  async call(@Body() body: { message: string }) {
+    await this.whatsapp.sendMessageToGroup(process.env.WHATSAPP_GROUP_ID, body.message);
+    return { success: true };
+  }
+
 }

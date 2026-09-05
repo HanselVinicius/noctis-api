@@ -102,4 +102,9 @@ export class WhatsappService implements OnModuleInit {
     const sock = this.getSocket();
     await sock.sendMessage(jid, { text });
   }
+
+  async sendMessageToGroup(groupId: any, text: string) {
+    const sock = this.getSocket();
+    await sock.sendMessage(groupId, { text });
+  }
 }
