@@ -23,13 +23,13 @@ export class WhatsappService implements OnModuleInit {
     private readonly messageDispatcher: MessageDispatcher,
     private readonly groupInvokeObserver: GroupInvokeObserver,
     private readonly sendToMessageBrokerObserver: SendToMessageBrokerObserver,
-  ) {}
+  ) { }
 
   async onModuleInit() {
     await this.connect();
     this.messageDispatcher.register(this.audioBlockObserver);
     this.messageDispatcher.register(this.groupInvokeObserver);
-    this.messageDispatcher.register(this.sendToMessageBrokerObserver);
+    // this.messageDispatcher.register(this.sendToMessageBrokerObserver);
   }
 
   getSocket(): WASocket {
