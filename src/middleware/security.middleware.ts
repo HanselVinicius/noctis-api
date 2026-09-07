@@ -9,10 +9,16 @@ import { Request } from 'express';
 
 @Injectable()
 export class ApiSecurityGuard implements CanActivate {
-  private readonly allowedIp = process.env.ALLOWED_IP;
-  private readonly allowedIps = ['127.0.0.1', '::1', this.allowedIp,'::ffff:127.0.0.1'];
-
+  private readonly allowedIps = ['127.0.0.1', '::1','::ffff:127.0.0.1'];
+  
   private readonly apiKey = process.env.API_KEY;
+
+  constructor() {
+    const allowedIpsEnv = process.env.ALLOWED_IPS;
+    if (allowedIpsEnv) {
+      this.allowedIps.push(...allowedIpsEnv.split(',').map(ip => ip.trim()));
+    }
+  }
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
@@ -27,7 +33,6 @@ export class ApiSecurityGuard implements CanActivate {
       (request.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
       request.socket.remoteAddress ||
       '';
-    console.log(`Request from IP: ${ip}`);
     if (!this.allowedIps.includes(ip)) {
       throw new ForbiddenException(`IP ${ip} not allowed`);
     }
