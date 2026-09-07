@@ -27,7 +27,7 @@ export class ApiSecurityGuard implements CanActivate {
       (request.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
       request.socket.remoteAddress ||
       '';
-
+    console.log(`Request from IP: ${ip}`);
     if (!this.allowedIps.includes(ip)) {
       throw new ForbiddenException(`IP ${ip} not allowed`);
     }
